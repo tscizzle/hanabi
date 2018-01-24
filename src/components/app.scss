@@ -1,24 +1,44 @@
 .app {
-  padding: 100px;
+  height: 100%;
+  width: 100%;
+}
+
+.board {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.hand {
+  position: relative;
 }
 
 .card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  height: 400px;
-  width: 250px;
+  height: 200px;
+  width: 125px;
   border-radius: 0.3em;
-  border: solid 1px #555;
-  box-shadow: 3px 3px 3px #888;
+  box-shadow: 2px -1px 7px #333;
+  font-size: 2.5em;
+  background-color: #BBB;
 }
 
 .upper-card-number {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 10px;
+  left: 15px;
 }
 
 .lower-card-number {
   position: absolute;
-  right: 5px;
-  bottom: 5px;
+  right: 15px;
+  bottom: 10px;
+}
+
+.card-icon {
+  height: 96px;
+  width: 60px;
 }

@@ -66,7 +66,6 @@ const mainReducer = (state = initialState(), action) => {
         topCardIdx,
         playersById,
         playedCardIds,
-        failedCardIds,
         turnsById,
         turnOrder,
       } = state;
