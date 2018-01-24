@@ -1,0 +1,24 @@
+.app {
+  padding: 100px;
+}
+
+.card {
+  position: relative;
+  height: 400px;
+  width: 250px;
+  border-radius: 0.3em;
+  border: solid 1px #555;
+  box-shadow: 3px 3px 3px #888;
+}
+
+.upper-card-number {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.lower-card-number {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}

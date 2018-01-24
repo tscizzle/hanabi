@@ -1,12 +1,12 @@
-const _ = require('lodash');
+import _ from 'lodash';
 
-const {
+import { GIVE_HINT, PLAY_CARD, DISCARD_CARD } from './actions';
+import {
   generateCards,
   HAND_SIZES,
   generatePlayers,
   getValidPlays,
-} = require('./hanabi');
-const { GIVE_HINT, PLAY_CARD, DISCARD_CARD } = require('./actions');
+} from './hanabi';
 
 
 const COLORS = [ 'yellow', 'blue', 'red', 'green', 'white' ];
@@ -154,4 +154,4 @@ const mainReducer = (state = initialState(), action) => {
 };
 
 
-module.exports = mainReducer;
+export default mainReducer;

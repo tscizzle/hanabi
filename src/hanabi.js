@@ -1,8 +1,8 @@
-const randomId = require('random-id');
-const _ = require('lodash');
+import randomId from 'random-id';
+import _ from 'lodash';
 
 
-const REPEATS_PER_CARD = {
+export const REPEATS_PER_CARD = {
   1: 3,
   2: 2,
   3: 2,
@@ -10,7 +10,7 @@ const REPEATS_PER_CARD = {
   5: 1,
 };
 
-const generateCards = ({ colors }) => {
+export const generateCards = ({ colors }) => {
   const cardsById = {};
   let cardOrder = [];
   _.each(colors, color => {
@@ -35,13 +35,13 @@ const generateCards = ({ colors }) => {
   };
 };
 
-const HAND_SIZES = {
+export const HAND_SIZES = {
   2: 5,
   3: 5,
   4: 4,
 };
 
-const generatePlayers = ({ numPlayers, cardOrder }) => {
+export const generatePlayers = ({ numPlayers, cardOrder }) => {
   const handSize = HAND_SIZES[numPlayers];
   const playersById = {};
   const playerOrder = [];
@@ -65,7 +65,7 @@ const generatePlayers = ({ numPlayers, cardOrder }) => {
   };
 };
 
-const getHintMatches = function({
+export const getHintMatches = function({
   forPlayerId,
   color,
   number,
@@ -86,7 +86,7 @@ const getHintMatches = function({
   };
 };
 
-const getValidPlays = function({ cardsById, playedCardIds, colors }) {
+export const getValidPlays = function({ cardsById, playedCardIds, colors }) {
   const playedCards = _.map(playedCardIds, cardId => cardsById[cardId]);
   const cards = _.values(cardsById);
   const validPlays = [];
@@ -99,18 +99,4 @@ const getValidPlays = function({ cardsById, playedCardIds, colors }) {
     }
   });
   return validPlays;
-};
-
-
-/*
-EXPORT
-*/
-
-module.exports = {
-  REPEATS_PER_CARD,
-  generateCards,
-  HAND_SIZES,
-  generatePlayers,
-  getHintMatches,
-  getValidPlays,
 };
