@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { GIVE_HINT, PLAY_CARD, DISCARD_CARD } from './actions';
+import { NEW_GAME, GIVE_HINT, PLAY_CARD, DISCARD_CARD } from './actions';
 import {
   generateCards,
   HAND_SIZES,
@@ -39,6 +39,9 @@ const initialState = () => {
 
 const mainReducer = (state = initialState(), action) => {
   switch (action.type) {
+    case NEW_GAME: {
+      return initialState();
+    }
     case GIVE_HINT: {
       const { hintsLeft, turnsById, turnOrder } = state;
       const { forPlayerId, color, number, turnId } = action;
