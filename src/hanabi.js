@@ -2,15 +2,14 @@ import randomId from 'random-id';
 import _ from 'lodash';
 
 
-export const REPEATS_PER_CARD = {
-  1: 3,
-  2: 2,
-  3: 2,
-  4: 2,
-  5: 1,
-};
-
 export const generateCards = ({ colors }) => {
+  const REPEATS_PER_CARD = {
+    1: 3,
+    2: 2,
+    3: 2,
+    4: 2,
+    5: 1,
+  };
   const cardsById = {};
   let cardOrder = [];
   _.each(colors, color => {

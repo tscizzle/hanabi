@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 
-import { ActiveBoard, NewGameButton } from '../containers/containers';
+import { ViewedPage } from '../containers/viewedPage';
 
 
 class App extends Component {
   render() {
     return (
       <div className="app">
-        <ActiveBoard />
-        <NewGameButton>
-          New Game
-        </NewGameButton>
+        <ViewedPage />
       </div>
     );
   }

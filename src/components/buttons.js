@@ -2,14 +2,19 @@ import React from 'react';
 import classNames from 'classnames';
 
 
-export const NiceButton = ({ children, ...otherProps }) => (
-  <button
-    className="nice-button"
-    {...otherProps}
-  >
-    {children}
-  </button>
-);
+export const NiceButton = ({ className, children, ...otherProps }) => {
+  const buttonClasses = classNames('nice-button', {
+    [className]: Boolean(className),
+  });
+  return (
+    <a
+      className={buttonClasses}
+      {...otherProps}
+    >
+      {children}
+    </a>
+  );
+};
 
 
 export const FloatingButton = ({ className, ...otherProps }) => {

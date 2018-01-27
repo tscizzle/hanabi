@@ -1,6 +1,13 @@
+import { combineReducers } from 'redux'
 import _ from 'lodash';
 
-import { NEW_GAME, GIVE_HINT, PLAY_CARD, DISCARD_CARD } from './actions';
+import {
+  ENTER_TABLE,
+  NEW_GAME,
+  GIVE_HINT,
+  PLAY_CARD,
+  DISCARD_CARD,
+} from './actions';
 import {
   generateCards,
   HAND_SIZES,
@@ -9,12 +16,10 @@ import {
 } from './hanabi';
 
 
-const COLORS = [ 'yellow', 'blue', 'red', 'green', 'white' ];
-const NUM_PLAYERS = 4;
-const MAX_HINTS = 8;
-
-
-const initialState = () => {
+const gameInitial = () => {
+  const COLORS = [ 'yellow', 'blue', 'red', 'green', 'white' ];
+  const NUM_PLAYERS = 3;
+  const MAX_HINTS = 8;
   const { cardsById, cardOrder } = generateCards({ colors: COLORS });
   const topCardIdx = HAND_SIZES[NUM_PLAYERS] * NUM_PLAYERS;
   const { playersById, playerOrder } = generatePlayers({
@@ -22,12 +27,14 @@ const initialState = () => {
     cardOrder,
   });
   return {
+    colors: COLORS,
     cardsById,
     cardOrder,
     topCardIdx,
     playersById,
     playerOrder,
-    hintsLeft: MAX_HINTS,
+    maxHints: MAX_HINTS,
+    hintsRemaining: MAX_HINTS,
     playedCardIds: [],
     failedCardIds: [],
     discardedCardIds: [],
@@ -37,15 +44,14 @@ const initialState = () => {
 };
 
 
-const mainReducer = (state = initialState(), action) => {
+const game = (state = gameInitial(), action) => {
   switch (action.type) {
     case NEW_GAME: {
-      return initialState();
+      return gameInitial();
     }
     case GIVE_HINT: {
-      const { hintsLeft, turnsById, turnOrder } = state;
+      const { hintsRemaining, turnsById, turnOrder } = state;
       const { forPlayerId, color, number, turnId } = action;
-      const newHintsLeft = _.max([hintsLeft - 1, 0]);
       const newTurn = {
         id: turnId,
         type: 'hint',
@@ -57,13 +63,14 @@ const mainReducer = (state = initialState(), action) => {
       };
       return {
         ...state,
-        hintsLeft: newHintsLeft,
+        hintsRemaining: _.max([hintsRemaining - 1, 0]),
         turnsById: { ...turnsById, [turnId]: newTurn },
         turnOrder: [ ...turnOrder, turnId ],
       };
     }
     case PLAY_CARD: {
       const {
+        colors,
         cardsById,
         cardOrder,
         topCardIdx,
@@ -87,7 +94,7 @@ const mainReducer = (state = initialState(), action) => {
       const validPlays = getValidPlays({
         cardsById,
         playedCardIds,
-        colors: COLORS,
+        colors,
       });
       const updateField = _.includes(validPlays, cardId)
         ? 'playedCardIds'
@@ -114,7 +121,8 @@ const mainReducer = (state = initialState(), action) => {
         cardOrder,
         topCardIdx,
         playersById,
-        hintsLeft,
+        maxHints,
+        hintsRemaining,
         discardedCardIds,
         turnsById,
         turnOrder,
@@ -143,7 +151,7 @@ const mainReducer = (state = initialState(), action) => {
         ...state,
         topCardIdx: topCardIdx + 1,
         playersById: { ...playersById, [playerId]: newPlayer },
-        hintsLeft: _.min([hintsLeft + 1, MAX_HINTS]),
+        hintsRemaining: _.min([hintsRemaining + 1, maxHints]),
         discardedCardIds: [ ...discardedCardIds, cardId ],
         turnsById: { ...turnsById, [turnId]: newTurn },
         turnOrder: [ ...turnOrder, turnId ],
@@ -156,4 +164,26 @@ const mainReducer = (state = initialState(), action) => {
 };
 
 
-export default mainReducer;
+const pageInitial = () => ({
+  inGame: false,
+});
+
+const page = (state = pageInitial(), action) => {
+  switch (action.type) {
+    case ENTER_TABLE: {
+      return {
+        ...state,
+        inGame: true,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+
+export default combineReducers({
+  game,
+  page,
+});

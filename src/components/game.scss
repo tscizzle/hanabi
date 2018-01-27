@@ -1,0 +1,132 @@
+$cardColor: #CCF;
+$cardColorBright: #DDF;
+$cardColorDark: #444;
+$boxShadowColor: #333;
+$textShadowColor: #555;
+
+
+.board {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.players {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.tabletop {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 60%;
+  padding: 30px;
+}
+
+.player {
+  flex-grow: 1;
+}
+
+.hand {
+  white-space: nowrap;
+  margin-top: 20px;
+
+  .card:first-child {
+    margin-left: 100px;
+  }
+}
+
+.card {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 120px;
+  width: 90px;
+  border-radius: 0.3em;
+  box-shadow: 2px -1px 10px $boxShadowColor;
+  font-size: 2em;
+  background-color: $cardColor;
+  text-shadow: 1px 0 $textShadowColor, 0 1px $textShadowColor;
+}
+
+.upper-card-number {
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+.lower-card-number {
+  position: absolute;
+  right: 5px;
+  bottom: 0px;
+}
+
+.card-back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 93%;
+  width: 93%;
+  border-radius: 0.3em;
+  background-color: $cardColorDark;
+}
+
+.card-back-icon {
+  color: $cardColor;
+}
+
+.deck {
+  white-space: nowrap;
+}
+
+.hints {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hint-container {
+  margin: 3px;
+  height: 41px;
+  width: 41px;
+}
+
+.hint {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  box-shadow: 2px -1px 5px $boxShadowColor;
+  background-color: $cardColor;
+}
+
+.used-hint {
+  background-color: $cardColorDark;
+}
+
+.remaining-hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7em;
+  color: purple;
+  cursor: pointer;
+
+  &:hover {
+    height: 41px;
+    width: 41px;
+    box-shadow: 2px -1px 15px $boxShadowColor;
+    background-color: $cardColorBright;
+  }
+
+  &:hover:active {
+    transform: translateX(1px) translateY(1px);
+  }
+}
+
+.stacks {
+  display: flex;
+  justify-content: space-around;
+}

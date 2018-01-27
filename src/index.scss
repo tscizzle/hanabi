@@ -1,5 +1,6 @@
 @import './components/app.scss';
-@import './components/components.scss';
+@import './components/page.scss';
+@import './components/game.scss';
 @import './components/buttons.scss';
 
 
@@ -12,9 +13,12 @@ html {
 
 /* font and color */
 
-body {
-  font-family: 'Lobster', cursive;
+html {
   color: #333;
+}
+
+* {
+  font-family: 'Lobster', cursive;
 }
 
 /* everything use border-box */
