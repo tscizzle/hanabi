@@ -11,6 +11,8 @@ import App from './components/app';
 
 const store = createStore(mainReducer);
 
+store.subscribe(() => console.log(store.getState()));
+
 ReactDOM.render(
   <Provider store={store}>
     <App />

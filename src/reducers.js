@@ -7,17 +7,43 @@ import {
   GIVE_HINT,
   PLAY_CARD,
   DISCARD_CARD,
+  SET_HINT_FOR_PLAYER_ID,
+  SET_HINT_TOPIC,
+  SET_HINT_COLOR,
+  SET_HINT_NUMBER,
 } from './actions';
 import {
   generateCards,
   HAND_SIZES,
   generatePlayers,
+  getHintMatches,
   getValidPlays,
 } from './hanabi';
 
 
+const COLORS = [ 'yellow', 'blue', 'red', 'green', 'white' ];
+
+
+const pageInitial = () => ({
+  inGame: false,
+});
+
+const page = (state = pageInitial(), action) => {
+  switch (action.type) {
+    case ENTER_TABLE: {
+      return {
+        ...state,
+        inGame: true,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+
 const gameInitial = () => {
-  const COLORS = [ 'yellow', 'blue', 'red', 'green', 'white' ];
   const NUM_PLAYERS = 3;
   const MAX_HINTS = 8;
   const { cardsById, cardOrder } = generateCards({ colors: COLORS });
@@ -51,16 +77,23 @@ const game = (state = gameInitial(), action) => {
     }
     case GIVE_HINT: {
       const { hintsRemaining, turnsById, turnOrder } = state;
-      const { forPlayerId, color, number, turnId } = action;
+      const { forPlayerId, filter, turnId } = action;
       const newTurn = {
         id: turnId,
         type: 'hint',
         payload: {
           forPlayerId,
-          color,
-          number,
+          filter,
         },
       };
+      // TEST
+      const { cardsById, playersById } = state;
+      console.log('filter', filter);
+      if (forPlayerId) {
+        const hintMatches = getHintMatches({ forPlayerId, filter, cardsById, playersById });
+        alert(JSON.stringify(hintMatches));
+      }
+      // END TEST
       return {
         ...state,
         hintsRemaining: _.max([hintsRemaining - 1, 0]),
@@ -164,16 +197,41 @@ const game = (state = gameInitial(), action) => {
 };
 
 
-const pageInitial = () => ({
-  inGame: false,
+const playingInitial = () => ({
+  hintForPlayerId: null,
+  hintTopic: 'number',
+  hintColor: COLORS[0],
+  hintNumber: 1,
 });
 
-const page = (state = pageInitial(), action) => {
+const playing = (state = playingInitial(), action) => {
   switch (action.type) {
-    case ENTER_TABLE: {
+    case SET_HINT_FOR_PLAYER_ID: {
+      const { forPlayerId } = action;
       return {
         ...state,
-        inGame: true,
+        hintForPlayerId: forPlayerId,
+      };
+    }
+    case SET_HINT_TOPIC: {
+      const { topic } = action;
+      return {
+        ...state,
+        hintTopic: topic,
+      };
+    }
+    case SET_HINT_COLOR: {
+      const { color } = action;
+      return {
+        ...state,
+        hintColor: color,
+      };
+    }
+    case SET_HINT_NUMBER: {
+      const { number } = action;
+      return {
+        ...state,
+        hintNumber: number,
       };
     }
     default: {
@@ -184,6 +242,7 @@ const page = (state = pageInitial(), action) => {
 
 
 export default combineReducers({
-  game,
   page,
+  game,
+  playing,
 });

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import classNames from 'classnames';
-import { FaFire, FaTint } from 'react-icons/lib/fa';
+import { FaFire } from 'react-icons/lib/fa';
 
+import { UsedHint } from './hint';
+import { ConnectedHintInputs } from '../containers/connectedHintInputs'
+import { ConnectedRemainingHint } from '../containers/connectedRemainingHint';
 import { NewGameButton } from '../containers/newGameButton';
 
 
@@ -13,12 +15,19 @@ export const Board = ({
   maxHints,
   hintsRemaining,
   playedCards,
+  hintForPlayerId,
+  setHintForPlayerId,
 }) => {
-  const playersDisplay = _.map(players, ({ id, handCards }) => (
-    <div className="player" key={id}>
+  const playersDisplay = _.map(players, ({ id, handCards }) =>
+    <div
+      className="player"
+      style={id === hintForPlayerId ? { backgroundColor: 'red' } : {}}
+      onClick={() => setHintForPlayerId(id)}
+      key={id}
+    >
       <Hand cards={handCards} />
     </div>
-  ));
+  );
   return (
     <div className="board">
       <div className="players">
@@ -26,7 +35,11 @@ export const Board = ({
       </div>
       <div className="tabletop">
         <Deck cards={deckCards} />
-        <Hints maxHints={maxHints} hintsRemaining={hintsRemaining} />
+        <Hints
+          maxHints={maxHints}
+          hintsRemaining={hintsRemaining}
+        />
+        <ConnectedHintInputs />
         <Stacks cards={playedCards} />
       </div>
       <NewGameButton>New Game</NewGameButton>
@@ -164,12 +177,14 @@ Deck.propTypes = {
 
 const Hints = ({ maxHints, hintsRemaining }) => {
   const hintsUsed = maxHints - hintsRemaining;
-  const hintsUsedDisplay = _.times(hintsUsed, idx => <UsedHint key={idx} />);
-  const hintsRemainingDisplay = _.times(hintsRemaining, idx => <RemainingHint key={idx} />);
+  const hintsDisplay = _.times(maxHints, idx =>
+    idx >= hintsUsed
+      ? <ConnectedRemainingHint key={idx} />
+      : <UsedHint key={idx} />
+  );
   return (
     <div className="hints">
-      {hintsUsedDisplay}
-      {hintsRemainingDisplay}
+      {hintsDisplay}
     </div>
   );
 };
@@ -178,36 +193,6 @@ Hints.propTypes = {
   maxHints: PropTypes.number.isRequired,
   hintsRemaining: PropTypes.number.isRequired,
 };
-
-
-const Hint = ({ className, children }) => {
-  const hintClasses = classNames('hint', {
-    [className]: Boolean(className),
-  });
-  return (
-    <div className="hint-container">
-      <div className={hintClasses}>
-        {children}
-      </div>
-    </div>
-  );
-};
-
-Hint.propTypes = {
-  className: PropTypes.string,
-};
-
-
-const UsedHint = () => (
-  <Hint className="used-hint"></Hint>
-);
-
-
-const RemainingHint = () => (
-  <Hint className="remaining-hint">
-    <FaTint />
-  </Hint>
-);
 
 
 const Stacks = ({ cards }) => {

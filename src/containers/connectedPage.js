@@ -11,6 +11,6 @@ const mapStateToProps = state => {
   };
 };
 
-export const ViewedPage = connect(
+export const ConnectedPage = connect(
   mapStateToProps,
 )(Page);

@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { enterTable } from '../actions';
 
-import { FloatingButton } from '../components/buttons';
+import { FloatingButton } from '../components/niceButton';
 
 
 const mapDispatchToProps = dispatch => ({

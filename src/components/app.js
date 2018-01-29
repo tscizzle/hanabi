@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import { ViewedPage } from '../containers/viewedPage';
+import { ConnectedPage } from '../containers/connectedPage';
 
 
 class App extends Component {
   render() {
     return (
       <div className="app">
-        <ViewedPage />
+        <ConnectedPage />
       </div>
     );
   }

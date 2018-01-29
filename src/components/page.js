@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ActiveBoard } from '../containers/activeBoard';
+import { ConnectedBoard } from '../containers/connectedBoard';
 import { EnterTableButton } from '../containers/enterTableButton';
 
 
 export const Page = ({ inGame }) => (
   inGame
-    ? <ActiveBoard />
+    ? <ConnectedBoard />
     : <EnterTableButton>Enter Table</EnterTableButton>
 );
 

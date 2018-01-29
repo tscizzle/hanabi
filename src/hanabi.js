@@ -66,21 +66,17 @@ export const generatePlayers = ({ numPlayers, cardOrder }) => {
 
 export const getHintMatches = function({
   forPlayerId,
-  color,
-  number,
+  filter,
   cardsById,
   playersById,
 }) {
-  /* Must specify exactly one of `color` or `number` */
   const player = playersById[forPlayerId];
   const { handCardIds } = player;
   const handCards = _.map(handCardIds, cardId => cardsById[cardId]);
-  const filter = !_.isUndefined(color) ? { color } : { number };
   const matchingCards = _.filter(handCards, filter);
   const matchingCardIds = _.map(matchingCards, 'id');
   return {
-    color,
-    number,
+    filter,
     matchingCardIds,
   };
 };

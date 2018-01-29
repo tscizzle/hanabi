@@ -1,7 +1,8 @@
 @import './components/app.scss';
 @import './components/page.scss';
 @import './components/game.scss';
-@import './components/buttons.scss';
+@import './components/hint.scss';
+@import './components/niceButton.scss';
 
 
 /* background */
@@ -38,4 +39,5 @@ html, body, #root {
   width: 100vw;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }

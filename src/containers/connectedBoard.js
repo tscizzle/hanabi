@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import { setHintForPlayerId } from '../actions';
+
 import { Board } from '../components/game';
 
 
 const mapStateToProps = state => {
-  const { game } = state;
+  const { game, playing } = state;
   const {
     cardsById,
     cardOrder,
@@ -16,6 +18,7 @@ const mapStateToProps = state => {
     hintsRemaining,
     playedCardIds,
   } = game;
+  const { hintForPlayerId } = playing;
   const players = _.map(playerOrder, playerId => {
     const player = playersById[playerId];
     const handCards = _.map(player.handCardIds, cardId => cardsById[cardId]);
@@ -33,9 +36,15 @@ const mapStateToProps = state => {
     maxHints,
     hintsRemaining,
     playedCards,
+    hintForPlayerId,
   };
 };
 
-export const ActiveBoard = connect(
+const mapDispatchToProps = dispatch => ({
+  setHintForPlayerId: forPlayerId => dispatch(setHintForPlayerId({ forPlayerId })),
+});
+
+export const ConnectedBoard = connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(Board);

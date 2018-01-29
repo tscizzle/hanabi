@@ -1,7 +1,6 @@
-$cardColor: #CCF;
-$cardColorBright: #DDF;
-$cardColorDark: #444;
-$boxShadowColor: #333;
+@import '../constants.scss';
+
+
 $textShadowColor: #555;
 
 
@@ -86,44 +85,6 @@ $textShadowColor: #555;
 .hints {
   display: flex;
   flex-wrap: wrap;
-}
-
-.hint-container {
-  margin: 3px;
-  height: 41px;
-  width: 41px;
-}
-
-.hint {
-  height: 40px;
-  width: 40px;
-  border-radius: 20px;
-  box-shadow: 2px -1px 5px $boxShadowColor;
-  background-color: $cardColor;
-}
-
-.used-hint {
-  background-color: $cardColorDark;
-}
-
-.remaining-hint {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.7em;
-  color: purple;
-  cursor: pointer;
-
-  &:hover {
-    height: 41px;
-    width: 41px;
-    box-shadow: 2px -1px 15px $boxShadowColor;
-    background-color: $cardColorBright;
-  }
-
-  &:hover:active {
-    transform: translateX(1px) translateY(1px);
-  }
 }
 
 .stacks {
