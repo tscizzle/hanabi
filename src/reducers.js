@@ -11,12 +11,13 @@ import {
   SET_HINT_TOPIC,
   SET_HINT_COLOR,
   SET_HINT_NUMBER,
+  OPEN_PLAY_OR_DISCARD,
+  CLOSE_PLAY_OR_DISCARD,
 } from './actions';
 import {
   generateCards,
   HAND_SIZES,
   generatePlayers,
-  getHintMatches,
   getValidPlays,
 } from './hanabi';
 
@@ -86,14 +87,6 @@ const game = (state = gameInitial(), action) => {
           filter,
         },
       };
-      // TEST
-      const { cardsById, playersById } = state;
-      console.log('filter', filter);
-      if (forPlayerId) {
-        const hintMatches = getHintMatches({ forPlayerId, filter, cardsById, playersById });
-        alert(JSON.stringify(hintMatches));
-      }
-      // END TEST
       return {
         ...state,
         hintsRemaining: _.max([hintsRemaining - 1, 0]),
@@ -202,6 +195,7 @@ const playingInitial = () => ({
   hintTopic: 'number',
   hintColor: COLORS[0],
   hintNumber: 1,
+  playOrDiscardCardId: null,
 });
 
 const playing = (state = playingInitial(), action) => {
@@ -234,6 +228,19 @@ const playing = (state = playingInitial(), action) => {
         hintNumber: number,
       };
     }
+    case OPEN_PLAY_OR_DISCARD: {
+      const { cardId } = action;
+      return {
+        ...state,
+        playOrDiscardCardId: cardId,
+      };
+    }
+    case CLOSE_PLAY_OR_DISCARD: {
+      return {
+        ...state,
+        playOrDiscardCardId: null,
+      };
+    }
     default: {
       return state;
     }
@@ -241,8 +248,10 @@ const playing = (state = playingInitial(), action) => {
 };
 
 
-export default combineReducers({
+const mainReducer = combineReducers({
   page,
   game,
   playing,
 });
+
+export default mainReducer;

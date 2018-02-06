@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import { setHintForPlayerId } from '../actions';
+import { getCurrentPlayerId, getPlayers } from '../selectors';
 
 import { Board } from '../components/game';
 
@@ -12,25 +13,18 @@ const mapStateToProps = state => {
     cardsById,
     cardOrder,
     topCardIdx,
-    playersById,
-    playerOrder,
     maxHints,
     hintsRemaining,
     playedCardIds,
   } = game;
   const { hintForPlayerId } = playing;
-  const players = _.map(playerOrder, playerId => {
-    const player = playersById[playerId];
-    const handCards = _.map(player.handCardIds, cardId => cardsById[cardId]);
-    return {
-      ...player,
-      handCards,
-    };
-  });
+  const currentPlayerId = getCurrentPlayerId(state);
+  const players = getPlayers(state);
   const allCards = _.map(cardOrder, cardId => cardsById[cardId]);
   const deckCards = _.slice(allCards, topCardIdx);
   const playedCards = _.map(playedCardIds, cardId => cardsById[cardId]);
   return {
+    currentPlayerId,
     players,
     deckCards,
     maxHints,

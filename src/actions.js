@@ -26,6 +26,10 @@ export const SET_HINT_COLOR = 'SET_HINT_COLOR';
 
 export const SET_HINT_NUMBER = 'SET_HINT_NUMBER';
 
+export const OPEN_PLAY_OR_DISCARD = 'OPEN_PLAY_OR_DISCARD';
+
+export const CLOSE_PLAY_OR_DISCARD = 'CLOSE_PLAY_OR_DISCARD';
+
 
 /*
 Action Creators
@@ -84,4 +88,13 @@ export const setHintColor = ({ color }) => ({
 export const setHintNumber = ({ number }) => ({
   type: SET_HINT_NUMBER,
   number,
+});
+
+export const openPlayOrDiscard = ({ cardId }) => ({
+  type: OPEN_PLAY_OR_DISCARD,
+  cardId,
+});
+
+export const closePlayOrDiscard = () => ({
+  type: CLOSE_PLAY_OR_DISCARD,
 });

@@ -39,3 +39,7 @@ export const RemainingHint = ({ giveHintFunc }) => (
     <FaTint />
   </Hint>
 );
+
+RemainingHint.propTypes = {
+  giveHintFunc: PropTypes.func.isRequired,
+};

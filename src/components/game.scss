@@ -1,9 +1,6 @@
 @import '../constants.scss';
 
 
-$textShadowColor: #555;
-
-
 .board {
   height: 100%;
   width: 100%;
@@ -27,6 +24,11 @@ $textShadowColor: #555;
 
 .player {
   flex-grow: 1;
+
+  &.current-player {
+    background-color: rgba(0, 200, 0, 0.3);
+    box-shadow: 0px 0px 20px $boxShadowColor;
+  }
 }
 
 .hand {
@@ -38,18 +40,8 @@ $textShadowColor: #555;
   }
 }
 
-.card {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  height: 120px;
-  width: 90px;
-  border-radius: 0.3em;
-  box-shadow: 2px -1px 10px $boxShadowColor;
+.card-front {
   font-size: 2em;
-  background-color: $cardColor;
-  text-shadow: 1px 0 $textShadowColor, 0 1px $textShadowColor;
 }
 
 .upper-card-number {
@@ -72,6 +64,7 @@ $textShadowColor: #555;
   width: 93%;
   border-radius: 0.3em;
   background-color: $cardColorDark;
+  font-size: 2em;
 }
 
 .card-back-icon {
@@ -90,4 +83,8 @@ $textShadowColor: #555;
 .stacks {
   display: flex;
   justify-content: space-around;
+}
+
+.stack {
+  position: relative;
 }

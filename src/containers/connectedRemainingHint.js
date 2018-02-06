@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const mergeProps = (stateProps, dispatchProps) => {
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
   const {
     hintForPlayerId: forPlayerId,
     hintTopic: topic,
@@ -30,6 +30,9 @@ const mergeProps = (stateProps, dispatchProps) => {
   } = stateProps;
   const { dispatch } = dispatchProps;
   return {
+    ...ownProps,
+    ...stateProps,
+    ...dispatchProps,
     giveHintFunc: () => {
       const filter = topic === 'color' ? { color } : { number };
       const turnId = randomId();

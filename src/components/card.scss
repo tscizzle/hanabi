@@ -1,0 +1,23 @@
+@import '../constants.scss';
+
+
+$cardWidth: 90px;
+
+
+.card {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: calc(#{$cardWidth} * (8 / 5));
+  width: $cardWidth;
+  border-radius: 0.3em;
+  box-shadow: 2px -1px 10px $boxShadowColor;
+  background-color: $cardColor;
+  text-shadow: 1px 0 $textShadowColor, 0 1px $textShadowColor;
+}
+
+.play-or-discard {
+  position: absolute;
+  top: 0;
+}
